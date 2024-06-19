@@ -1,0 +1,35 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class FilterJobsTest {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // 1. Configure the Web browser
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // 2. Navigate to the website
+        driver.get("https://minimals.cc/");
+
+        // 3. Login to the website
+        WebElement emailField = driver.findElement(By.id("email"));
+        WebElement passwordField = driver.findElement(By.id("password"));
+        emailField.sendKeys("demo@minimals.cc");
+        passwordField.sendKeys("demo1234");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // 4. Navigate to the Job page
+        driver.findElement(By.xpath("//a[@href='#job']")).click();
+        driver.findElement(By.xpath("//a[@href='#list']")).click();
+
+        // 5. Open the 'Filters' panel to reveal the sidebar
+        driver.findElement(By.xpath("//i[@class='fa fa-filter']")).click();
+
+        // 6. Select the 'On Demand' employment types from the filters
+        WebElement onDemandCheckbox = driver.findElement(By.xpath("//label[contains(text(), 'On Demand')]/preceding-sibling::input"));
+        onDemandCheckbox.click();
+
+        // 7. Dismiss the right
