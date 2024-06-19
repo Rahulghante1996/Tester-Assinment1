@@ -31,9 +31,9 @@ public class UpdateBillingInformation {
         driver.findElement(By.xpath("//a[@href='#billing']")).click();
 
         // 6. Update billing information
-        WebElement billingNameField = driver.findElement(By.id("billing_name"));
-        billingNameField.clear();
-        billingNameField.sendKeys("Deja Brady");
+        WebElement billlingNameField = driver.findElement(By.id("billing_name"));
+        billlingNameField.clear();
+        billlingNameField.sendKeys("Deja Brady");
 
         WebElement paymentMethodDropdown = driver.findElement(By.id("payment_method"));
         paymentMethodDropdown.click();
