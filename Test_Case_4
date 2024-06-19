@@ -1,0 +1,40 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SendChatMessageTest {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // 1. Configure the Web browser
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // 2. Navigate to the website
+        driver.get("https://minimals.cc/");
+
+        // 3. Login to the website
+        WebElement emailField = driver.findElement(By.id("email"));
+        WebElement passwordField = driver.findElement(By.id("password"));
+        emailField.sendKeys("demo@minimals.cc");
+        passwordField.sendKeys("demo1234");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // 4. Navigate to the Chat page
+        driver.findElement(By.xpath("//a[@href='#chat']")).click();
+
+        // 5. Select the chat with 'Deja Brady'
+        WebElement dejaBradyChat = driver.findElement(By.xpath("//a[contains(text(), 'Deja Brady')]"));
+        dejaBradyChat.click();
+
+        // 6. Send the message: "Hello, how are you?"
+        WebElement messageField = driver.findElement(By.id("message"));
+        messageField.sendKeys("Hello, how are you?");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // 7. Validate that the message has been sent successfully
+        WebElement messageSent = driver.findElement(By.xpath("//div[contains(text(), 'Message sent successfully')]"));
+        Assert.assertTrue(messageSent.isDisplayed());
+    }
+}
