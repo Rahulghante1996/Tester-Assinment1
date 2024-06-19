@@ -1,0 +1,39 @@
+import org.openqa.selenium.By;
+import org.openqa.selenium.WebDriver;
+import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
+
+public class SearchOrderTest {
+    public static void main(String[] args) {
+        System.setProperty("webdriver.chrome.driver", "path/to/chromedriver");
+
+        // 1. Configure the Web browser
+        WebDriver driver = new ChromeDriver();
+        driver.manage().window().maximize();
+
+        // 2. Navigate to the website
+        driver.get("https://minimals.cc/");
+
+        // 3. Login to the website
+        WebElement emailField = driver.findElement(By.id("email"));
+        WebElement passwordField = driver.findElement(By.id("password"));
+        emailField.sendKeys("demo@minimals.cc");
+        passwordField.sendKeys("demo1234");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // 4. Navigate to the Order page
+        driver.findElement(By.xpath("//a[@href='#order']")).click();
+        driver.findElement(By.xpath("//a[@href='#list']")).click();
+
+        // 5. Perform a search for the query "cor"
+        WebElement searchField = driver.findElement(By.id("search_field"));
+        searchField.sendKeys("cor");
+        driver.findElement(By.xpath("//button[@type='submit']")).click();
+
+        // 6. Validate the search results
+        WebElement orderRow = driver.findElement(By.xpath("//td[contains(text(), 'Cortez Herring')]"));
+        Assert.assertTrue(orderRow.isDisplayed());
+        WebElement orderCount = driver.findElement(By.xpath("//div[@class='dataTables_info']"));
+        Assert.assertEquals(orderCount.getText(), "Showing 1 to 1 of 1 entry");
+    }
+}
